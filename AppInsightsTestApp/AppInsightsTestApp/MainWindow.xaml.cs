@@ -24,7 +24,7 @@ namespace AppInsightsTestApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        public TelemetryClient tc = new TelemetryClient();
+        private TelemetryClient tc = new TelemetryClient();
 
         private int comboCount = 0;
         private int exceCount = 0;
@@ -37,22 +37,13 @@ namespace AppInsightsTestApp
         public MainWindow()
         {
             InitializeComponent();
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-            ShowComputerResult(0);
-            ShowPlayerResult(0);
-
-        }
-
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
             tc.InstrumentationKey = "66a222f9-bfc7-4998-92a6-8cc16bbd0db4";
 
-            // Set session data:
             tc.Context.User.Id = Environment.UserName;
             tc.Context.Session.Id = Guid.NewGuid().ToString();
-            //tc.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
+            tc.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
+
             tc.Context.Device.OperatingSystem = GetWindowsFriendlyName();
 
             tc.Context.Component.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
@@ -66,9 +57,19 @@ namespace AppInsightsTestApp
                    .OfType<ManagementObject>()
                                        select x.GetPropertyValue("Model")).FirstOrDefault()?.ToString() ?? "Unknown";
 
-            tc.TrackPageView("MainWindow");           
+            tc.TrackPageView("MainWindow");
+
+            tc.TrackEvent("ExceptionButton_Click");
+            tc.TrackEvent("CrashButton_Click");
+
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
+            ShowComputerResult(0);
+            ShowPlayerResult(0);
 
         }
+
+        
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppInsightsTestApp"
         mc:Ignorable="d"
-        Title="AppInsighsTestApp" Height="470" Width="500" Loaded="Window_Loaded" Closing="Window_Closing">
+        Title="AppInsighsTestApp" Height="470" Width="500" Closing="Window_Closing">
 
     <Grid Background="LightGray" >
         <Grid.RowDefinitions>
@@ -38,7 +38,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Image Margin="5" Width="23" Source="Images/Exce.png" />
                     <TextBlock Margin="0" Foreground="White" TextAlignment="Center" VerticalAlignment="Center" Text="Exception" />
-                    <TextBlock Name="ExceptionTextBlock" Margin="5" Foreground="White" TextAlignment="Center" VerticalAlignment="Center" Text="0" />
+                    <TextBlock Name="ExceptionTextBlock" Margin="5" Foreground="White" TextAlignment="Center" VerticalAlignment="Center" Text="" />
             </StackPanel>
             </Button>
             <Button x:Name="CrashButton" Grid.Row="0" Grid.Column="2" 
